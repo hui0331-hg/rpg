@@ -47,6 +47,10 @@ jobs:
         run: pnpm build
 
       - uses: actions/configure-pages@v5
+        with:
+          # 仓库还没启用 Pages 时，尝试自动启用（需要 pages: write 权限）
+          # 若组织策略禁止自动创建，仍需在 Settings → Pages 手动把 Source 设为 GitHub Actions
+          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
