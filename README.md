@@ -204,17 +204,49 @@ scripts/
 
 ## 部署到 GitHub Pages
 
-1. 推到 GitHub 仓库；
-2. Settings → Pages → Source 选 **GitHub Actions**，或直接用任意静态托管；
-3. `vite.config.ts` 里 `base: './'` 已配好相对路径，放在 `/<repo>/` 子路径下也能正常工作。
+仓库里已经配好 `.github/workflows/deploy.yml`：推送到 `main` 会自动
+装依赖 → 跑 148+12 项测试 → 构建 → 发布。测试挂了就不会发布，避免把白屏版本推上线。
+
+### 三步
+
+**① 在 GitHub 建一个空仓库**（不要勾选 README / .gitignore，保持空）
+
+**② 本地关联并推送**
 
 ```bash
-pnpm build
-# 把 dist/ 整个目录推到你选择的静态托管即可
+cd "D:\Tanikaze Amane\dsh\rpg"
+git remote add origin https://github.com/hui0331-hg/<仓库名>.git
+git push -u origin main
 ```
 
+首次推送会要求登录。推荐用 Personal Access Token 当密码
+（GitHub → Settings → Developer settings → Personal access tokens → 勾 `repo` 权限），
+或者装 GitHub Desktop / `gh` CLI 走网页登录。
+
+**③ 打开仓库 Settings → Pages → Source 选 `GitHub Actions`**
+
+之后每次 push 都会自动发布，地址形如：
+`https://hui0331-hg.github.io/<仓库名>/`
+
+### ⚠️ 这台机器上的 hosts 会挡住 GitHub
+
+如果本机 `C:\Windows\System32\drivers\etc\hosts` 里有 `github.com`、`api.github.com`、
+`github.io` 之类的行指向 `127.0.0.1`，那么：
+
+- `git push` 会连到本机，直接失败；
+- 部署成功后 **这台电脑也打不开** `*.github.io` 的站点（手机不受影响）。
+
+需要把这些行注释掉（在行首加 `#`）后执行 `ipconfig /flushdns`。
+改系统文件需要管理员权限，且要先确认这些条目是谁加的（有些安全软件或
+"GitHub 加速"脚本会写入），不要盲目删除。
+
+### 其他托管方式
+
+`vite.config.ts` 里 `base: './'` 用的是相对路径，构建产物 `dist/` 可以直接丢到
+任意静态托管（Cloudflare Pages / Netlify / Vercel / 对象存储 + CDN）。
+
 > PWA 的「安装到主屏幕 + 离线可用」要求 **HTTPS** 安全上下文。
-> 局域网 `http://192.168.x.x` 只能当普通网页用，装不成 App。
+> 局域网 `http://192.168.x.x` 只能当普通网页用，装不成 App —— 但用来调数值、试手感足够。
 
 ---
 
