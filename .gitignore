@@ -6,8 +6,9 @@ dist-ssr/
 .vite/
 *.log
 
-# 测试中间产物
+# 测试中间产物与临时诊断脚本
 scripts/.test-*.mjs
+scripts/.tmp-*
 
 # 编辑器
 .vscode/*
