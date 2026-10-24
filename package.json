@@ -1,0 +1,29 @@
+{
+  "name": "personal-rpg",
+  "private": true,
+  "version": "0.3.0",
+  "type": "module",
+  "description": "个人RPG系统 - 日常化、定制化的个人成长游戏化面板",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "serve": "node scripts/serve.mjs",
+    "test": "pnpm test:logic && pnpm test:render",
+    "test:logic": "esbuild scripts/test-engine.ts --bundle --platform=node --format=esm --packages=external --outfile=scripts/.test-engine.mjs --log-level=warning && node scripts/.test-engine.mjs",
+    "test:render": "esbuild scripts/test-render.tsx --bundle --platform=node --format=esm --packages=external --outfile=scripts/.test-render.mjs --log-level=warning && node scripts/.test-render.mjs",
+    "icons": "node scripts/gen-icons.mjs"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.1.0",
+    "esbuild": "^0.28.0",
+    "typescript": "^5.9.0",
+    "vite": "^7.1.0"
+  }
+}

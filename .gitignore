@@ -1,0 +1,15 @@
+node_modules/
+dist/
+dist-ssr/
+*.local
+.DS_Store
+.vite/
+*.log
+
+# 测试中间产物
+scripts/.test-*.mjs
+
+# 编辑器
+.vscode/*
+!.vscode/extensions.json
+.idea/

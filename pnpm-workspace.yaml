@@ -1,0 +1,6 @@
+# pnpm v12 起，允许执行安装脚本的依赖在这里声明。
+# esbuild 的 postinstall (install.js) 在受限沙箱下起子进程会被 EPERM 拦掉；
+# 但它的 Windows 预编译二进制 (@esbuild/win32-x64/esbuild.exe) 已随可选依赖安装到位，
+# 该脚本只做「版本校验 + 缺失时兜底下载」，不需要执行。故显式声明不跑。
+allowBuilds:
+  esbuild: false
